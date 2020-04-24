@@ -1,13 +1,307 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.inline {
+  display: inline;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.display-none {
+  display: none;
+}
+
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+
+.shadow-1 {
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.17);
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
+.text-cream-200 {
+  color: #fff8ee;
+}
+
+.bg-cream-200 {
+  background-color: #fff8ee;
+}
+
+.fill-cream-200 {
+  fill: #fff8ee;
+}
+
+.bg-red-300 {
+  background-color: #ebcccc;
+}
+
+.bg-red-100 {
+  background-color: #fff5f5;
+}
+
+.bg-green {
+  background-color: #9c9a26;
+}
+
+.bg-red-600 {
+  background-color: #754646;
+}
+
+.bg-brown-400 {
+  background-color: #805523;
+}
+
+.bg-brown-900 {
+  background-color: #2f1d10;
+}
+
+.fill-brown-800 {
+  fill: #452d11;
+}
+
+.bg-brown-800 {
+  background-color: #452d11;
+}
+
+.text-brown-400 {
+  color: #805523;
+}
+.text-brown-800 {
+  color: #452d11;
+}
+
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+
+.border-brown_28 {
+  border-color: rgba(128, 85, 35, 0.28);
+}
+
+.p0\.2 {
+  padding: 0.2rem;
+}
+
+.p1x {
+  padding: 0.5rem;
+}
+
+.p2x {
+  padding: 1rem;
+}
+
+.pb2x {
+  padding-bottom: 1rem;
+}
+
+.p3x {
+  padding: 1.5rem;
+}
+
+.py0\.2 {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.px1x {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.t-1x {
+  top: -0.5rem;
+}
+
+.r-1x {
+  right: -0.5rem;
+}
+
+.radius1x {
+  border-radius: 0.5rem;
+}
+
+.fz12px {
+  font-size: 12px;
+}
+
+.fz14px {
+  font-size: 14px;
+}
+
+.fz20px {
+  font-size: 20px;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.radius0\.25 {
+  border-radius: 0.25rem;
+}
+
+.shadow1 {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.flex-column {
+  flex-direction: column;
+}
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+.items-center {
+  align-items: center;
+}
+.items-end {
+  align-items: flex-end;
+}
+.items-start {
+  align-items: flex-start;
+}
+.items-stretch {
+  align-items: stretch;
+}
+
+.critter-list-layout {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.grid-critter-image {
+  grid-area: critter-image;
+}
+
+.grid-critter-name {
+  grid-area: critter-name;
+}
+
+.grid-critter-where {
+  grid-area: critter-where;
+}
+
+.mt1x {
+  margin-top: 0.5rem;
+}
+
+.mb1x {
+  margin-bottom: 0.5rem;
+}
+
+.mb2x {
+  margin-bottom: 1rem;
+}
+
+.critter-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  grid-template-areas: "critter-image critter-name-where";
+}
+
+.critter-card__details {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.o0p {
+  opacity: 0;
+}
+
+.hover-o100p:hover {
+  opacity: 100;
+}
+
+.focus-o100p:focus {
+  opacity: 100;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
