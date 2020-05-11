@@ -14,19 +14,22 @@ const DetailSection = (props: DetailSectionProps) => {
   return (
     <div>
       <h4 className="fz12px text-uppercase ls0.1">{props.title}</h4>
-      <p className="fz14px">{props.details}</p>
+      <p className="fz14px text-brown-400">{props.details}</p>
     </div>
   );
 };
 
 const DonatedButton = (props: { donatedId: string }) => {
-  const donations = JSON.parse(localStorage.getItem("donated") || "[]");
-  const donatedIdPosition = donations.indexOf(props.donatedId);
-  const previouslyDonated = donatedIdPosition !== -1;
+  const previouslyDonated =
+    JSON.parse(localStorage.getItem("donated") || "[]").indexOf(
+      props.donatedId
+    ) !== -1;
 
   const [isDonated, setIsDonated] = useState(previouslyDonated);
 
   const handleButtonClick = () => {
+    const donations = JSON.parse(localStorage.getItem("donated") || "[]");
+    const donatedIdPosition = donations.indexOf(props.donatedId);
     if (isDonated) {
       donations?.splice(donatedIdPosition, 1);
       localStorage.setItem("donated", JSON.stringify(donations));
@@ -54,8 +57,8 @@ const DonatedButton = (props: { donatedId: string }) => {
 
 export const CritterCard = (props: Props) => {
   return (
-    <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800">
-      <DonatedButton donatedId={`${props.critterType}-${props.index}`} />
+    <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
+      <DonatedButton key={props.critterId} donatedId={props.critterId} />
       <div className="critter-card__header items-center border-bottom border-brown_28 pb2x mb2x">
         <div className="grid-critter-image flex flex-column items-center">
           <img

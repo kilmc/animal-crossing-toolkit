@@ -1,3 +1,8 @@
+button {
+  all: unset;
+  cursor: pointer;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -16,11 +21,6 @@ code {
     monospace;
 }
 
-button {
-  all: unset;
-  cursor: pointer;
-}
-
 h1,
 h2,
 h3,
@@ -34,10 +34,17 @@ p {
 ol,
 ul {
   padding: 0;
+  margin: 0;
 }
 
 ul li {
   list-style-type: none;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 
 .block {
@@ -57,6 +64,27 @@ ul li {
 }
 .display-none {
   display: none;
+}
+
+@media (min-width: 750px) {
+  .block-sm {
+    display: block;
+  }
+  .flex-sm {
+    display: flex;
+  }
+  .inline-sm {
+    display: inline;
+  }
+  .inline-block-sm {
+    display: inline-block;
+  }
+  .inline-flex-sm {
+    display: inline-flex;
+  }
+  .display-none-sm {
+    display: none;
+  }
 }
 
 .absolute {
@@ -79,6 +107,10 @@ ul li {
 
 .bg-cream-200 {
   background-color: #fff8ee;
+}
+
+.bg-cream-200_50 {
+  background-color: rgba(255, 248, 238, 0.5);
 }
 
 .fill-cream-200 {
@@ -109,12 +141,20 @@ ul li {
   background-color: #2f1d10;
 }
 
+.bg-yellow-300 {
+  background-color: #ffdc81;
+}
+
 .fill-brown-800 {
   fill: #452d11;
 }
 
 .bg-brown-800 {
   background-color: #452d11;
+}
+
+.bg-brown-800_30 {
+  background-color: rgba(69, 45, 17, 0.3);
 }
 
 .text-brown-400 {
@@ -124,8 +164,24 @@ ul li {
   color: #452d11;
 }
 
+.text-brown-800_70 {
+  color: rgba(69, 45, 17, 0.7);
+}
+
 .border-bottom {
   border-bottom: 1px solid black;
+}
+
+.border-top {
+  border-top: 1px solid black;
+}
+
+.border-cream-200 {
+  border-color: #fff8ee;
+}
+
+.border0\.25 {
+  border-width: 0.25rem;
 }
 
 .border-brown_28 {
@@ -148,6 +204,20 @@ ul li {
   padding-bottom: 1rem;
 }
 
+.pt2x {
+  padding-top: 1rem;
+}
+
+.py2x {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.px2x {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
 .p3x {
   padding: 1.5rem;
 }
@@ -162,6 +232,19 @@ ul li {
   padding-right: 0.5rem;
 }
 
+.px3x {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.ml1x {
+  margin-left: 0.5rem;
+}
+
+.mr1x {
+  margin-right: 0.5rem;
+}
+
 .t-1x {
   top: -0.5rem;
 }
@@ -172,6 +255,14 @@ ul li {
 
 .radius1x {
   border-radius: 0.5rem;
+}
+
+.radius0\.25 {
+  border-radius: 0.25rem;
+}
+
+.radius100p {
+  border-radius: 100%;
 }
 
 .fz12px {
@@ -186,12 +277,48 @@ ul li {
   font-size: 20px;
 }
 
+.fz24px {
+  font-size: 24px;
+}
+
 .text-uppercase {
   text-transform: uppercase;
 }
 
 .radius0\.25 {
   border-radius: 0.25rem;
+}
+
+.radius0\.5 {
+  border-radius: 0.5rem;
+}
+
+.w1 {
+  width: 1rem;
+}
+
+.w100p {
+  width: 100%;
+}
+
+.h1 {
+  height: 1rem;
+}
+
+.h100p {
+  height: 100%;
+}
+
+.min-h100vh {
+  min-height: 100vh;
+}
+
+.w50p {
+  width: 50%;
+}
+
+.h50p {
+  height: 50%;
 }
 
 .shadow1 {
@@ -243,10 +370,44 @@ ul li {
   align-items: stretch;
 }
 
-.critter-list-layout {
-  display: grid;
-  grid-gap: 3rem;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+.h5x {
+  height: 2.5rem;
+}
+
+.h8x {
+  height: 4rem;
+}
+
+.self-baseline {
+  align-self: baseline;
+}
+.self-center {
+  align-self: center;
+}
+.self-end {
+  align-self: flex-end;
+}
+.self-start {
+  align-self: flex-start;
+}
+.self-stretch {
+  align-self: stretch;
+}
+
+.jself-baseline {
+  justify-self: baseline;
+}
+.jself-center {
+  justify-self: center;
+}
+.jself-end {
+  justify-self: flex-end;
+}
+.jself-start {
+  justify-self: flex-start;
+}
+.jself-stretch {
+  justify-self: stretch;
 }
 
 .text-bold {
@@ -273,8 +434,21 @@ ul li {
   margin-bottom: 0.5rem;
 }
 
+.mb0\.25 {
+  margin-bottom: 0.25rem;
+}
+
+.my1x {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .mb2x {
   margin-bottom: 1rem;
+}
+
+.mb3x {
+  margin-bottom: 1.5rem;
 }
 
 .critter-card__header {
@@ -304,4 +478,68 @@ ul li {
 
 .ml-auto {
   margin-left: auto;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.mb6x {
+  margin-bottom: 3rem;
+}
+.radius-top1x {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.t0 {
+  top: 0;
+}
+
+.z1 {
+  z-index: 1;
+}
+
+.ovy-scroll {
+  overflow-y: scroll;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.layout-critter-list {
+  display: grid;
+  column-gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  overflow-y: scroll;
+  padding: 1.5rem;
+  align-content: start;
+}
+
+.layout-main {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.layout-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+.layout-stats-header {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: max-content max-content auto;
+}
+
+.layout-form {
+  display: grid;
+  gap: 0.5rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 }

@@ -14,7 +14,6 @@ export const getCritterImageUrl = (
   critterType: CritterType
 ) => {
   const publicDir = process.env.PUBLIC_URL;
-  console.log("publicDir", publicDir);
   const subDir = `critters/${critterType}/`;
   const name = critterName.replace(/\s/g, "-").replace(/'/g, "").toLowerCase();
 

@@ -1,4 +1,5 @@
 export type CritterType = "bug" | "fish";
+export type Hemisphere = "northern" | "southern";
 
 export interface CritterProps {
   bells: number;
@@ -9,6 +10,7 @@ export interface CritterProps {
   timeOfYearFound: number[];
   name: string;
   whereFound: string;
+  critterId: string;
 }
 
 export interface CritterInputProps {
