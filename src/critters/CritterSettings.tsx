@@ -11,44 +11,46 @@ import showingFish from "../assets/showing-fish.png";
 import showingBugs from "../assets/showing-bugs.png";
 import showingBoth from "../assets/showing-both.png";
 import { Checkbox, CustomCheckboxProps } from "../components/Checkbox";
-import { RadioItemProps, RadioButtons } from "../components/RadioButtons";
+import {
+  CustomRadioButtonProps,
+  RadioButtons,
+} from "../components/RadioButtons";
 
-const CustomRadio = (props: RadioItemProps) => {
+const CustomRadioButton = (props: CustomRadioButtonProps) => {
+  const wrapperClasses = cxs("flex items-center", props.lastItem ? "" : "mr1x");
+  const radioClasses = cxs(
+    "w1 h1 radius100p mr1x flex items-center justify-center",
+    props.isChecked ? "bg-brown-800" : "bg-brown-800_30"
+  );
+  const radioMarkerClasses = "radius100p bg-cream-200 w40p h40p";
+
   return (
-    <div className={`flex items-center ${props.lastItem ? "" : "mr1x"}`}>
-      <div
-        className={`w1 h1 radius100p mr1x flex items-center justify-center ${
-          props.checked ? "bg-brown-800" : "bg-brown-800_30"
-        }`}
-      >
-        {props.checked && (
-          <div
-            style={{ width: "40%", height: "40%" }}
-            className="radius100p bg-cream-200"
-          ></div>
-        )}
+    <div className={wrapperClasses}>
+      <div className={radioClasses}>
+        {props.isChecked && <div className={radioMarkerClasses}></div>}
       </div>
-      <span>{props.children}</span>
+      <span className={props.isFocused ? "text-bold" : ""}>
+        {props.children}
+      </span>
     </div>
   );
 };
 
 const CustomCheckbox = (props: CustomCheckboxProps) => {
+  const checkboxWrapperClasses = cxs(
+    "w1 h1 mr1x radius0.25 flex items-center justify-center",
+    props.isChecked ? "bg-brown-800" : "bg-brown-800_30"
+  );
+  const checkedMarkerClasses = cxs("w40p h40p bg-cream-200");
+
   return (
     <div className="flex items-center">
-      <div
-        className={`w1 h1 mr1x radius0.25 flex items-center justify-center ${
-          props.checked ? "bg-brown-800" : "bg-brown-800_30"
-        }`}
-      >
-        {props.checked && (
-          <div
-            style={{ width: "40%", height: "40%" }}
-            className="bg-cream-200"
-          ></div>
-        )}
+      <div className={checkboxWrapperClasses}>
+        {props.isChecked && <div className={checkedMarkerClasses}></div>}
       </div>
-      <span>{props.children}</span>
+      <span className={props.isFocused ? "text-bold" : ""}>
+        {props.children}
+      </span>
     </div>
   );
 };
@@ -110,14 +112,6 @@ export const CritterAppSettings = (props: {
   critterType: CritterType | "both";
   setCritter: Function;
 }) => {
-  const donatedImageUrl = props.showDonated ? donatedShowing : donatedHidden;
-  const inactiveImageUrl = props.showInactive
-    ? inactiveShowing
-    : inactiveHidden;
-  const hemisphereImageUrl =
-    props.hemisphere === "northern" ? northernHemisphere : southernHemisphere;
-  const critterImageUrl = getCritterTypeImageUrl(props.critterType);
-
   const [settingsOpen, setSettingsOpen] = useState(true);
 
   return (
@@ -125,6 +119,7 @@ export const CritterAppSettings = (props: {
       <div className="layout-stats-header block w100p py2x">
         <StatSection stat="30 / 80" label="bugs" />
         <StatSection stat="50 / 80" label="fish" />
+
         <button
           className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center"
           onClick={() => setSettingsOpen(!settingsOpen)}
@@ -134,9 +129,9 @@ export const CritterAppSettings = (props: {
       </div>
 
       {settingsOpen && (
-        <form className="py2x border border-top border-brown_28 layout-form">
+        <form className="py2x border border-top border-brown_28 layout-form text-brown-800">
           <Section
-            imageUrl={donatedImageUrl}
+            imageUrl={props.showDonated ? donatedShowing : donatedHidden}
             sectionTitle="Donations"
             imageAlt="Blathers icon"
           >
@@ -146,7 +141,7 @@ export const CritterAppSettings = (props: {
           </Section>
 
           <Section
-            imageUrl={inactiveImageUrl}
+            imageUrl={props.showInactive ? inactiveShowing : inactiveHidden}
             sectionTitle="Activity"
             imageAlt="Square representing active and inactive critters"
           >
@@ -156,7 +151,11 @@ export const CritterAppSettings = (props: {
           </Section>
 
           <Section
-            imageUrl={hemisphereImageUrl}
+            imageUrl={
+              props.hemisphere === "northern"
+                ? northernHemisphere
+                : southernHemisphere
+            }
             sectionTitle="Hemisphere"
             imageAlt={`Sphere highlighted on the ${props.hemisphere} hemisphere`}
           >
@@ -165,12 +164,12 @@ export const CritterAppSettings = (props: {
               className="flex"
               onChange={props.setHemisphere}
             >
-              <CustomRadio value="northern">North</CustomRadio>
-              <CustomRadio value="southern">South</CustomRadio>
+              <CustomRadioButton value="northern">North</CustomRadioButton>
+              <CustomRadioButton value="southern">South</CustomRadioButton>
             </RadioButtons>
           </Section>
           <Section
-            imageUrl={critterImageUrl}
+            imageUrl={getCritterTypeImageUrl(props.critterType)}
             sectionTitle="Critters"
             imageAlt={
               props.critterType === "both"
@@ -183,9 +182,9 @@ export const CritterAppSettings = (props: {
               className="flex"
               onChange={props.setCritter}
             >
-              <CustomRadio value="bug">Bugs</CustomRadio>
-              <CustomRadio value="fish">Fish</CustomRadio>
-              <CustomRadio value="both">Both</CustomRadio>
+              <CustomRadioButton value="bug">Bugs</CustomRadioButton>
+              <CustomRadioButton value="fish">Fish</CustomRadioButton>
+              <CustomRadioButton value="both">Both</CustomRadioButton>
             </RadioButtons>
           </Section>
         </form>

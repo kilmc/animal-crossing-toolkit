@@ -47,6 +47,8 @@ fieldset {
   padding: 0;
 }
 
+/* ========== CLASSES ========== */
+
 .block {
   display: block;
 }
@@ -208,6 +210,10 @@ fieldset {
   padding-top: 1rem;
 }
 
+.pt3x {
+  padding-top: 1.5rem;
+}
+
 .py2x {
   padding-bottom: 1rem;
   padding-top: 1rem;
@@ -293,32 +299,8 @@ fieldset {
   border-radius: 0.5rem;
 }
 
-.w1 {
-  width: 1rem;
-}
-
-.w100p {
-  width: 100%;
-}
-
-.h1 {
-  height: 1rem;
-}
-
-.h100p {
-  height: 100%;
-}
-
 .min-h100vh {
   min-height: 100vh;
-}
-
-.w50p {
-  width: 50%;
-}
-
-.h50p {
-  height: 50%;
 }
 
 .shadow1 {
@@ -370,14 +352,6 @@ fieldset {
   align-items: stretch;
 }
 
-.h5x {
-  height: 2.5rem;
-}
-
-.h8x {
-  height: 4rem;
-}
-
 .self-baseline {
   align-self: baseline;
 }
@@ -414,17 +388,92 @@ fieldset {
   font-weight: bold;
 }
 
-.grid-critter-image {
-  grid-area: critter-image;
+.o0p {
+  opacity: 0;
 }
 
-.grid-critter-name {
-  grid-area: critter-name;
+.hover-o100p:hover {
+  opacity: 100;
 }
 
-.grid-critter-where {
-  grid-area: critter-where;
+.focus-o100p:focus {
+  opacity: 100;
 }
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.radius-top1x {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.t0 {
+  top: 0;
+}
+
+.z1 {
+  z-index: 1;
+}
+
+.ovy-scroll {
+  overflow-y: scroll;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Height */
+
+.h1 {
+  height: 1rem;
+}
+
+.h5x {
+  height: 2.5rem;
+}
+
+.h8x {
+  height: 4rem;
+}
+
+.h40p {
+  height: 40%;
+}
+
+.h50p {
+  height: 50%;
+}
+
+.h100p {
+  height: 100%;
+}
+
+/* Width */
+
+.w1 {
+  width: 1rem;
+}
+
+.w40p {
+  width: 40%;
+}
+
+.w50p {
+  width: 50%;
+}
+
+.w100p {
+  width: 100%;
+}
+
+/* Margin */
 
 .mt1x {
   margin-top: 0.5rem;
@@ -451,6 +500,12 @@ fieldset {
   margin-bottom: 1.5rem;
 }
 
+.mb6x {
+  margin-bottom: 3rem;
+}
+
+/* Grid */
+
 .critter-card__header {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -464,48 +519,16 @@ fieldset {
   grid-template-columns: 1fr 1fr;
 }
 
-.o0p {
-  opacity: 0;
+.grid-critter-image {
+  grid-area: critter-image;
 }
 
-.hover-o100p:hover {
-  opacity: 100;
+.grid-critter-name {
+  grid-area: critter-name;
 }
 
-.focus-o100p:focus {
-  opacity: 100;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.sticky {
-  position: sticky;
-}
-
-.mb6x {
-  margin-bottom: 3rem;
-}
-.radius-top1x {
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-}
-
-.t0 {
-  top: 0;
-}
-
-.z1 {
-  z-index: 1;
-}
-
-.ovy-scroll {
-  overflow-y: scroll;
-}
-
-.text-center {
-  text-align: center;
+.grid-critter-where {
+  grid-area: critter-where;
 }
 
 .layout-critter-list {

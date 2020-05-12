@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { cxs } from "../utils/className";
 
 export interface CustomCheckboxProps {
-  checked?: boolean;
+  isChecked?: boolean;
+  isFocused?: boolean;
   children: string;
 }
 
@@ -12,30 +12,30 @@ interface CheckboxProps {
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-  const [checked, setChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const child = React.Children.only(props.children);
-  const classes = cxs(isFocused ? "text-bold" : "");
 
   return (
-    <fieldset className={classes}>
+    <fieldset>
       <label>
         <input
           type="checkbox"
           className="o0p absolute"
-          checked={checked}
+          checked={isChecked}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onChange={() => {
-            const newChecked = !checked;
+            const newChecked = !isChecked;
             if (props.onChange) {
               props.onChange(newChecked);
             }
-            setChecked(newChecked);
+            setIsChecked(newChecked);
           }}
         />
         {React.cloneElement(child, {
-          checked,
+          isChecked,
+          isFocused,
         })}
       </label>
     </fieldset>

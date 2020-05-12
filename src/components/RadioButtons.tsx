@@ -1,49 +1,78 @@
 import React, { useState } from "react";
 
-export interface RadioItemProps {
-  checked?: boolean;
+export interface CustomRadioButtonProps {
+  isChecked?: boolean;
+  isFocused?: boolean;
   children: string;
   lastItem?: boolean;
   value: string;
 }
 
+const RadioButton = (props: {
+  children: React.ReactElement<CustomRadioButtonProps>;
+  radioGroupName?: string;
+  onChange?: Function;
+  isChecked?: boolean;
+  value: string;
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const child = React.Children.only(props.children);
+
+  return (
+    <label>
+      <input
+        type="radio"
+        id={`${props.radioGroupName}-${child.props.value}`}
+        name={props.radioGroupName}
+        className="o0p absolute"
+        checked={props.isChecked}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onChange={() => {
+          if (props.onChange) {
+            props.onChange(props.value);
+          }
+        }}
+      />
+      {React.cloneElement(child, {
+        isChecked: props.isChecked,
+        isFocused,
+      })}
+    </label>
+  );
+};
+
 interface RadioButtonsProps {
-  children: React.ReactElement<RadioItemProps>[];
+  children: React.ReactElement<CustomRadioButtonProps>[];
   radioGroupName: string;
   className?: string;
   onChange?: Function;
 }
 
 export const RadioButtons = (props: RadioButtonsProps) => {
-  const firstItem = props.children[0].props.children;
-  const [checked, setChecked] = useState(firstItem);
+  const firstItem = props.children[0].props.value;
+  const [checkedItem, setCheckedItem] = useState(firstItem);
 
   return (
     <fieldset className={props.className}>
       {React.Children.map(props.children, (child, i) => {
-        const { children, value } = child.props;
-        const isChecked = checked === children;
+        const isChecked = checkedItem === child.props.value;
         return (
-          <label key={i}>
-            <input
-              checked={isChecked}
-              className="o0p absolute"
-              id={`${props.radioGroupName}-${value}`}
-              name={props.radioGroupName}
-              onChange={() => {
-                setChecked(children);
-                if (props.onChange) {
-                  props.onChange(value);
-                }
-              }}
-              type="radio"
-              value={value}
-            />
+          <RadioButton
+            radioGroupName={props.radioGroupName}
+            onChange={() => {
+              if (props.onChange) {
+                props.onChange(child.props.value);
+              }
+              setCheckedItem(child.props.value);
+            }}
+            value={child.props.value}
+            isChecked={isChecked}
+          >
             {React.cloneElement(child, {
-              checked: isChecked,
               lastItem: props.children.length === i,
             })}
-          </label>
+          </RadioButton>
         );
       })}
     </fieldset>
