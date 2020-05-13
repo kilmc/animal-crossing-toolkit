@@ -68,6 +68,14 @@ function App() {
   const setCritter = (critterType: CritterType | "both") =>
     setState({ ...state, critterType });
 
+  const donatedBugsCount = state.donations.filter((critter) =>
+    critter.match("bug")
+  ).length;
+
+  const donatedFishCount = state.donations.filter((critter) =>
+    critter.match("fish")
+  ).length;
+
   return (
     <FilterContext.Provider value={{ state, setState }}>
       <GoogleSheetsProvider>
@@ -92,6 +100,10 @@ function App() {
                   setHemisphere={setHemisphere}
                   critterType={state.critterType}
                   setCritter={setCritter}
+                  donationsCount={{
+                    bugs: donatedBugsCount,
+                    fish: donatedFishCount,
+                  }}
                 />
               </div>
               <BugsList />

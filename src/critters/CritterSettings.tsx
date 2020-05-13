@@ -111,14 +111,15 @@ export const CritterAppSettings = (props: {
   setHemisphere: Function;
   critterType: CritterType | "both";
   setCritter: Function;
+  donationsCount: { bugs: number; fish: number };
 }) => {
   const [settingsOpen, setSettingsOpen] = useState(true);
 
   return (
     <div className="bg-cream-200 px3x">
       <div className="layout-stats-header block w100p py2x">
-        <StatSection stat="30 / 80" label="bugs" />
-        <StatSection stat="50 / 80" label="fish" />
+        <StatSection stat={`${props.donationsCount.bugs} / 80`} label="bugs" />
+        <StatSection stat={`${props.donationsCount.fish} / 80`} label="fish" />
 
         <button
           className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center"
