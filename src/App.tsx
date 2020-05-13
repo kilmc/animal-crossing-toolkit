@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import GoogleSheetsProvider, { withGoogleSheets } from "react-db-google-sheets";
 import { cleanTimeOfYear } from "./cleaning/cleanTimeOfYear";
 import { cleanTimeOfDay } from "./cleaning/cleaningTimeOfDay";
@@ -14,7 +14,7 @@ interface BugsSheetMapperProps {
 }
 
 const BugsListMapper = (data: BugsSheetMapperProps) => {
-  const { hemisphere } = useContext(FilterContext);
+  const { hemisphere } = useContext(FilterContext).state;
   const currentHemisphere =
     hemisphere === "northern" ? "timeOfYearFoundNorth" : "timeOfYearFoundSouth";
   const critters = data.db.critters;
@@ -38,22 +38,27 @@ interface stateProps {
   showDonated: boolean;
   hemisphere: Hemisphere;
   critterType: CritterType | "both";
+  donations: string[];
 }
 const initialState: stateProps = {
   showDonated: false,
   showInactive: false,
   hemisphere: "northern",
   critterType: "bug",
+  donations: [],
 };
 
-export const FilterContext = React.createContext(initialState);
+export const FilterContext = React.createContext({
+  state: initialState,
+  setState: (newState: stateProps) => {},
+});
 
 function App() {
   const [state, setState] = useLocalStorageState(
     initialState,
     "animal-crossing"
   );
-  console.log("OUTER STATE", state);
+
   const setShowDonated = (showDonated: boolean) =>
     setState({ ...state, showDonated });
   const setShowInactive = (showInactive: boolean) =>
@@ -64,14 +69,7 @@ function App() {
     setState({ ...state, critterType });
 
   return (
-    <FilterContext.Provider
-      value={{
-        showDonated: state.showDonated,
-        showInactive: state.showInactive,
-        hemisphere: state.hemisphere,
-        critterType: state.critterType,
-      }}
-    >
+    <FilterContext.Provider value={{ state, setState }}>
       <GoogleSheetsProvider>
         <div>
           <div className="bg-yellow-300 layout-main">

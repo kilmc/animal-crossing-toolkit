@@ -15,11 +15,11 @@ export function useLocalStorageState<T>(
     window.localStorage.setItem(localStorageKey, JSON.stringify(state));
   };
 
-  const [state, setState] = useState(load());
+  const [state, setState] = useState<T>(load());
   const setStateAndSave = (newState: T) => {
     setState(newState);
     save(newState);
   };
 
-  return [state, setStateAndSave];
+  return [state, setStateAndSave] as [typeof state, typeof setStateAndSave];
 }

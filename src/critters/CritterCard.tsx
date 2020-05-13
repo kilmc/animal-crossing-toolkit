@@ -3,7 +3,11 @@ import { SvgDonatedOwl } from "../assets/SvgDonatedOwl";
 import { CritterProps } from "../types";
 import { getCritterImageUrl } from "./utils";
 
-type Props = CritterProps & { activeNow: boolean };
+type Props = CritterProps & {
+  activeNow: boolean;
+  donations: string[];
+  setDonations: Function;
+};
 
 interface DetailSectionProps {
   title: string;
@@ -19,26 +23,22 @@ const DetailSection = (props: DetailSectionProps) => {
   );
 };
 
-const DonatedButton = (props: { donatedId: string }) => {
-  const previouslyDonated =
-    JSON.parse(localStorage.getItem("donated") || "[]").indexOf(
-      props.donatedId
-    ) !== -1;
-
+const DonatedButton = (props: {
+  donatedId: string;
+  donations: string[];
+  setDonations: Function;
+}) => {
+  const previouslyDonated = props.donations.indexOf(props.donatedId) !== -1;
   const [isDonated, setIsDonated] = useState(previouslyDonated);
 
   const handleButtonClick = () => {
-    const donations = JSON.parse(localStorage.getItem("donated") || "[]");
-    const donatedIdPosition = donations.indexOf(props.donatedId);
+    const donatedIdPosition = props.donations.indexOf(props.donatedId);
     if (isDonated) {
-      donations?.splice(donatedIdPosition, 1);
-      localStorage.setItem("donated", JSON.stringify(donations));
+      props.donations?.splice(donatedIdPosition, 1);
+      props.setDonations(props.donations);
       setIsDonated(false);
     } else {
-      localStorage.setItem(
-        "donated",
-        JSON.stringify(donations.concat(props.donatedId))
-      );
+      props.setDonations(props.donations.concat(props.donatedId));
       setIsDonated(true);
     }
   };
@@ -58,7 +58,12 @@ const DonatedButton = (props: { donatedId: string }) => {
 export const CritterCard = (props: Props) => {
   return (
     <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
-      <DonatedButton key={props.critterId} donatedId={props.critterId} />
+      <DonatedButton
+        key={props.critterId}
+        donatedId={props.critterId}
+        donations={props.donations}
+        setDonations={props.setDonations}
+      />
       <div className="critter-card__header items-center border-bottom border-brown_28 pb2x mb2x">
         <div className="grid-critter-image flex flex-column items-center">
           <img

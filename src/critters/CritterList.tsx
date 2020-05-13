@@ -19,18 +19,9 @@ const filterByCritterType = (
   return critter.critterType === currentSelection;
 };
 
-const filterDonated = (critter: CritterProps) => {
-  const previouslyDonated =
-    JSON.parse(localStorage.getItem("donated") || "[]").indexOf(
-      critter.critterId
-    ) !== -1;
-
-  return previouslyDonated;
-};
-
 export const CritterList = (props: Props) => {
-  const { showInactive, critterType, showDonated } = useContext(FilterContext);
-  console.log("PROVIDER STATE", useContext(FilterContext));
+  const { state, setState } = useContext(FilterContext);
+  const { showInactive, critterType, showDonated, donations } = state;
   const filterInactive = showInactive
     ? (x: CritterProps) => x
     : isCritterActive;
@@ -41,12 +32,16 @@ export const CritterList = (props: Props) => {
         .filter(filterInactive)
         .filter((critter) => filterByCritterType(critter, critterType))
         .filter((critter) =>
-          showDonated ? (x: CritterProps) => x : !filterDonated(critter)
+          showDonated ? true : !(donations.indexOf(critter.critterId) !== -1)
         )
         .map((critter, i) => {
           return (
             <li key={`critter-${i}`}>
               <CritterCard
+                donations={donations}
+                setDonations={(arr: string[]) =>
+                  setState({ ...state, donations: arr })
+                }
                 timeOfDayFound={critter.timeOfDayFound}
                 timeOfYearFound={critter.timeOfYearFound}
                 name={critter.name}

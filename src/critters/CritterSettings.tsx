@@ -112,10 +112,6 @@ export const CritterAppSettings = (props: {
   critterType: CritterType | "both";
   setCritter: Function;
 }) => {
-  console.log("showDonated", props.showDonated);
-  console.log("showInactive", props.showInactive);
-  console.log("hemisphere", props.hemisphere);
-  console.log("critterType", props.critterType);
   const [settingsOpen, setSettingsOpen] = useState(true);
 
   return (
