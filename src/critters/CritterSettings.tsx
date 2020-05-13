@@ -112,6 +112,10 @@ export const CritterAppSettings = (props: {
   critterType: CritterType | "both";
   setCritter: Function;
 }) => {
+  console.log("showDonated", props.showDonated);
+  console.log("showInactive", props.showInactive);
+  console.log("hemisphere", props.hemisphere);
+  console.log("critterType", props.critterType);
   const [settingsOpen, setSettingsOpen] = useState(true);
 
   return (
@@ -135,7 +139,10 @@ export const CritterAppSettings = (props: {
             sectionTitle="Donations"
             imageAlt="Blathers icon"
           >
-            <Checkbox onChange={props.setShowDonated}>
+            <Checkbox
+              onChange={props.setShowDonated}
+              isChecked={props.showDonated}
+            >
               <CustomCheckbox>Show donated</CustomCheckbox>
             </Checkbox>
           </Section>
@@ -145,7 +152,10 @@ export const CritterAppSettings = (props: {
             sectionTitle="Activity"
             imageAlt="Square representing active and inactive critters"
           >
-            <Checkbox onChange={props.setShowInactive}>
+            <Checkbox
+              onChange={props.setShowInactive}
+              isChecked={props.showInactive}
+            >
               <CustomCheckbox>Show inactive</CustomCheckbox>
             </Checkbox>
           </Section>
@@ -163,6 +173,7 @@ export const CritterAppSettings = (props: {
               radioGroupName="hemisphere"
               className="flex"
               onChange={props.setHemisphere}
+              checkedItem={props.hemisphere}
             >
               <CustomRadioButton value="northern">North</CustomRadioButton>
               <CustomRadioButton value="southern">South</CustomRadioButton>
@@ -181,6 +192,7 @@ export const CritterAppSettings = (props: {
               radioGroupName="critters"
               className="flex"
               onChange={props.setCritter}
+              checkedItem={props.critterType}
             >
               <CustomRadioButton value="bug">Bugs</CustomRadioButton>
               <CustomRadioButton value="fish">Fish</CustomRadioButton>

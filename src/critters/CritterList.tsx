@@ -30,6 +30,7 @@ const filterDonated = (critter: CritterProps) => {
 
 export const CritterList = (props: Props) => {
   const { showInactive, critterType, showDonated } = useContext(FilterContext);
+  console.log("PROVIDER STATE", useContext(FilterContext));
   const filterInactive = showInactive
     ? (x: CritterProps) => x
     : isCritterActive;

@@ -5,6 +5,7 @@ import { cleanTimeOfDay } from "./cleaning/cleaningTimeOfDay";
 import { CritterInputProps, CritterType, Hemisphere } from "./types";
 import { CritterList } from "./critters/CritterList";
 import { CritterAppSettings } from "./critters/CritterSettings";
+import { useLocalStorageState } from "./utils/useLocalStorageState";
 
 interface BugsSheetMapperProps {
   db: {
@@ -32,44 +33,43 @@ const BugsListMapper = (data: BugsSheetMapperProps) => {
 
 const BugsList = withGoogleSheets("critters")(BugsListMapper);
 
-interface FilterStateProps {
+interface stateProps {
   showInactive: boolean;
   showDonated: boolean;
   hemisphere: Hemisphere;
   critterType: CritterType | "both";
 }
-const initialFilterState: FilterStateProps = {
+const initialState: stateProps = {
   showDonated: false,
   showInactive: false,
   hemisphere: "northern",
   critterType: "bug",
 };
 
-export const FilterContext = React.createContext(initialFilterState);
+export const FilterContext = React.createContext(initialState);
 
 function App() {
-  const [showInactive, setShowInactive] = useState<boolean>(
-    initialFilterState.showInactive
+  const [state, setState] = useLocalStorageState(
+    initialState,
+    "animal-crossing"
   );
-
-  const [showDonated, setShowDonated] = useState<boolean>(
-    initialFilterState.showDonated
-  );
-  const [hemisphere, setHemisphere] = useState<Hemisphere>(
-    initialFilterState.hemisphere
-  );
-
-  const [critterType, setCritter] = useState<"bug" | "fish" | "both">(
-    initialFilterState.critterType
-  );
+  console.log("OUTER STATE", state);
+  const setShowDonated = (showDonated: boolean) =>
+    setState({ ...state, showDonated });
+  const setShowInactive = (showInactive: boolean) =>
+    setState({ ...state, showInactive });
+  const setHemisphere = (hemisphere: Hemisphere) =>
+    setState({ ...state, hemisphere });
+  const setCritter = (critterType: CritterType | "both") =>
+    setState({ ...state, critterType });
 
   return (
     <FilterContext.Provider
       value={{
-        showDonated,
-        showInactive,
-        hemisphere,
-        critterType,
+        showDonated: state.showDonated,
+        showInactive: state.showInactive,
+        hemisphere: state.hemisphere,
+        critterType: state.critterType,
       }}
     >
       <GoogleSheetsProvider>
@@ -86,13 +86,13 @@ function App() {
             <div className="layout-body">
               <div>
                 <CritterAppSettings
-                  showDonated={showDonated}
+                  showDonated={state.showDonated}
                   setShowDonated={setShowDonated}
-                  showInactive={showInactive}
+                  showInactive={state.showInactive}
                   setShowInactive={setShowInactive}
-                  hemisphere={hemisphere}
+                  hemisphere={state.hemisphere}
                   setHemisphere={setHemisphere}
-                  critterType={critterType}
+                  critterType={state.critterType}
                   setCritter={setCritter}
                 />
               </div>

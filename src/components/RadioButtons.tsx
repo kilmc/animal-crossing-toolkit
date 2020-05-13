@@ -47,11 +47,11 @@ interface RadioButtonsProps {
   radioGroupName: string;
   className?: string;
   onChange?: Function;
+  checkedItem: string;
 }
 
 export const RadioButtons = (props: RadioButtonsProps) => {
-  const firstItem = props.children[0].props.value;
-  const [checkedItem, setCheckedItem] = useState(firstItem);
+  const [checkedItem, setCheckedItem] = useState(props.checkedItem);
 
   return (
     <fieldset className={props.className}>
@@ -70,7 +70,7 @@ export const RadioButtons = (props: RadioButtonsProps) => {
             isChecked={isChecked}
           >
             {React.cloneElement(child, {
-              lastItem: props.children.length === i,
+              lastItem: props.children.length - 1 === i,
             })}
           </RadioButton>
         );

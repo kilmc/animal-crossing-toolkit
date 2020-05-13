@@ -8,11 +8,12 @@ export interface CustomCheckboxProps {
 
 interface CheckboxProps {
   children: React.ReactElement<CustomCheckboxProps>;
+  isChecked: boolean;
   onChange?: Function;
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(props.isChecked);
   const [isFocused, setIsFocused] = useState(false);
   const child = React.Children.only(props.children);
 
