@@ -65,12 +65,14 @@ const Section = (props: {
   const classNames = cxs("flex", props.className);
   return (
     <div className={classNames}>
-      <img
-        src={props.imageUrl}
-        className="mr1x"
-        style={{ width: "3rem" }}
-        alt={props.imageAlt}
-      />
+      <div>
+        <img
+          src={props.imageUrl}
+          className="mr1x"
+          style={{ width: "3rem" }}
+          alt={props.imageAlt}
+        />
+      </div>
       <div className="flex flex-column justify-center">
         <h3 className="fz14px text-uppercase ls0.1 text-brown-800_70 mb0.25">
           {props.sectionTitle}
@@ -122,7 +124,7 @@ export const CritterAppSettings = (props: {
         <StatSection stat={`${props.donationsCount.fish} / 80`} label="fish" />
 
         <button
-          className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center"
+          className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center fz16px"
           onClick={() => setSettingsOpen(!settingsOpen)}
         >
           {settingsOpen ? "Hide settings" : "Show Settings"}

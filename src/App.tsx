@@ -83,7 +83,7 @@ function App() {
           <div className="bg-yellow-300 layout-main">
             <header className="sticky t0 z1 px3x flex h8x bg-brown-900 text-cream-200 items-center">
               <nav className="self-end">
-                <button className="bg-cream-200 text-brown-800 radius-top1x text-bold p1x">
+                <button className="bg-cream-200 text-brown-800 radius-top1x text-bold p1x fz16px">
                   Critter Helper
                 </button>
               </nav>

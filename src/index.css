@@ -1,5 +1,7 @@
 button {
-  all: unset;
+  padding: 0;
+  margin: 0;
+  border: none;
   cursor: pointer;
 }
 
@@ -277,6 +279,10 @@ fieldset {
 
 .fz14px {
   font-size: 14px;
+}
+
+.fz16px {
+  font-size: 16px;
 }
 
 .fz20px {
