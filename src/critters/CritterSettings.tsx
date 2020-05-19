@@ -105,6 +105,8 @@ const StatSection = (props: { stat: string; label: string }) => {
 };
 
 export const CritterAppSettings = (props: {
+  settingsOpen: boolean;
+  setSettingsVisibility: Function;
   showDonated: boolean;
   setShowDonated: Function;
   showInactive: boolean;
@@ -115,17 +117,21 @@ export const CritterAppSettings = (props: {
   setCritter: Function;
   donationsCount: { bugs: number; fish: number };
 }) => {
-  const [settingsOpen, setSettingsOpen] = useState(true);
+  const [settingsOpen, setSettingsOpen] = useState(props.settingsOpen);
 
   return (
-    <div className="bg-cream-200 px3x">
+    <div className="bg-cream-200 px3x shadow-1 z1 relative">
       <div className="layout-stats-header block w100p py2x">
         <StatSection stat={`${props.donationsCount.bugs} / 80`} label="bugs" />
         <StatSection stat={`${props.donationsCount.fish} / 80`} label="fish" />
 
         <button
           className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center fz16px"
-          onClick={() => setSettingsOpen(!settingsOpen)}
+          onClick={() => {
+            const newState = !settingsOpen;
+            setSettingsOpen(newState);
+            props.setSettingsVisibility(newState);
+          }}
         >
           {settingsOpen ? "Hide settings" : "Show Settings"}
         </button>

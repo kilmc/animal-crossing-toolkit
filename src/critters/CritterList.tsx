@@ -21,7 +21,13 @@ const filterByCritterType = (
 
 export const CritterList = (props: Props) => {
   const { state, setState } = useContext(FilterContext);
-  const { showInactive, critterType, showDonated, donations } = state;
+  const {
+    showInactive,
+    critterType,
+    showDonated,
+    donations,
+    hemisphere,
+  } = state;
   const filterInactive = showInactive
     ? (x: CritterProps) => x
     : isCritterActive;
@@ -38,6 +44,7 @@ export const CritterList = (props: Props) => {
           return (
             <li key={`critter-${i}`}>
               <CritterCard
+                key={hemisphere}
                 donations={donations}
                 setDonations={(arr: string[]) =>
                   setState({ ...state, donations: arr })

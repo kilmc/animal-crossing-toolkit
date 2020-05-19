@@ -3,6 +3,7 @@ button {
   margin: 0;
   border: none;
   cursor: pointer;
+  background-color: transparent;
 }
 
 * {
@@ -425,6 +426,10 @@ fieldset {
 
 .z1 {
   z-index: 1;
+}
+
+.z2 {
+  z-index: 2;
 }
 
 .ovy-scroll {

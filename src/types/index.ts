@@ -1,3 +1,5 @@
+import { Interval } from "luxon";
+
 export type CritterType = "bug" | "fish";
 export type Hemisphere = "northern" | "southern";
 
@@ -6,8 +8,8 @@ export interface CritterProps {
   critterType: CritterType;
   imageUrl: string;
   index: number;
-  timeOfDayFound: number[];
-  timeOfYearFound: number[];
+  timeOfDayFound: Interval[];
+  timeOfYearFound: Interval[];
   name: string;
   whereFound: string;
   critterId: string;

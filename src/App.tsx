@@ -34,6 +34,7 @@ const BugsListMapper = (data: BugsSheetMapperProps) => {
 const BugsList = withGoogleSheets("critters")(BugsListMapper);
 
 interface stateProps {
+  settingsOpen: boolean;
   showInactive: boolean;
   showDonated: boolean;
   hemisphere: Hemisphere;
@@ -41,6 +42,7 @@ interface stateProps {
   donations: string[];
 }
 const initialState: stateProps = {
+  settingsOpen: false,
   showDonated: false,
   showInactive: false,
   hemisphere: "northern",
@@ -59,6 +61,8 @@ function App() {
     "animal-crossing"
   );
 
+  const setSettingsVisibility = (settingsOpen: boolean) =>
+    setState({ ...state, settingsOpen });
   const setShowDonated = (showDonated: boolean) =>
     setState({ ...state, showDonated });
   const setShowInactive = (showInactive: boolean) =>
@@ -92,6 +96,8 @@ function App() {
             <div className="layout-body">
               <div>
                 <CritterAppSettings
+                  settingsOpen={state.settingsOpen}
+                  setSettingsVisibility={setSettingsVisibility}
                   showDonated={state.showDonated}
                   setShowDonated={setShowDonated}
                   showInactive={state.showInactive}

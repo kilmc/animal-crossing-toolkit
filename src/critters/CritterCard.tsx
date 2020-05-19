@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SvgDonatedOwl } from "../assets/SvgDonatedOwl";
 import { CritterProps } from "../types";
 import { getCritterImageUrl } from "./utils";
+import { timeOfDayDescription } from "../time/timeOfDayDescription";
+import { Interval } from "luxon";
 
 type Props = CritterProps & {
   activeNow: boolean;
@@ -55,7 +57,40 @@ const DonatedButton = (props: {
   );
 };
 
+const timeText = (timeOfYear: Interval[], timeOfDay: Interval[]) => {
+  const isAvailableAllDay = timeOfDay[0].toDuration("hours").hours > 23;
+  let formattedTimeOfYear: string;
+  let formattedTimeOfDay: string;
+
+  formattedTimeOfYear = timeOfYear
+    .map((months) => months.toFormat("LLLL"))
+    .join(", ");
+
+  formattedTimeOfDay = timeOfDay
+    .map((hours) => hours.toFormat("ha"))
+    .join(", ")
+    .toLowerCase();
+
+  if (isAvailableAllDay) {
+    formattedTimeOfDay = "All day";
+  }
+
+  return [formattedTimeOfYear, formattedTimeOfDay];
+};
+
 export const CritterCard = (props: Props) => {
+  const [activityText, setActivityText] = useState(
+    timeText(props.timeOfYearFound, props.timeOfDayFound)
+  );
+  const [timeOfYearText, timeOfDayText] = activityText;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivityText(timeText(props.timeOfYearFound, props.timeOfDayFound));
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [props.timeOfDayFound, props.timeOfYearFound]);
+
   return (
     <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
       <DonatedButton
@@ -83,14 +118,8 @@ export const CritterCard = (props: Props) => {
         </div>
       </div>
       <div className="critter-card__details">
-        <DetailSection
-          title="Seasonality"
-          details="You’ve got plenty of time to catch them."
-        />
-        <DetailSection
-          title="Time"
-          details="You’ve got plenty of time to catch them."
-        />
+        <DetailSection title="Seasonality" details={timeOfYearText} />
+        <DetailSection title="Time" details={timeOfDayText} />
         <DetailSection title="Price" details={`${props.bells}`} />
       </div>
     </div>
