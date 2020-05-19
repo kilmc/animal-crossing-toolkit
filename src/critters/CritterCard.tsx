@@ -59,6 +59,7 @@ const DonatedButton = (props: {
 
 const timeText = (timeOfYear: Interval[], timeOfDay: Interval[]) => {
   const isAvailableAllDay = timeOfDay[0].toDuration("hours").hours > 23;
+  const isAvailableAllYear = timeOfYear[0].toDuration("months").months > 11;
   let formattedTimeOfYear: string;
   let formattedTimeOfDay: string;
 
@@ -73,6 +74,10 @@ const timeText = (timeOfYear: Interval[], timeOfDay: Interval[]) => {
 
   if (isAvailableAllDay) {
     formattedTimeOfDay = "All day";
+  }
+
+  if (isAvailableAllYear) {
+    formattedTimeOfYear = "All year";
   }
 
   return [formattedTimeOfYear, formattedTimeOfDay];
@@ -90,7 +95,7 @@ export const CritterCard = (props: Props) => {
     }, 60000);
     return () => clearInterval(interval);
   }, [props.timeOfDayFound, props.timeOfYearFound]);
-
+  console.log(props.name);
   return (
     <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
       <DonatedButton
