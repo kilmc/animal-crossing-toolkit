@@ -71,27 +71,6 @@ fieldset {
   display: none;
 }
 
-@media (min-width: 750px) {
-  .block-sm {
-    display: block;
-  }
-  .flex-sm {
-    display: flex;
-  }
-  .inline-sm {
-    display: inline;
-  }
-  .inline-block-sm {
-    display: inline-block;
-  }
-  .inline-flex-sm {
-    display: inline-flex;
-  }
-  .display-none-sm {
-    display: none;
-  }
-}
-
 .absolute {
   position: absolute;
 }
@@ -399,6 +378,10 @@ fieldset {
   opacity: 0;
 }
 
+.o10p {
+  opacity: 0.1;
+}
+
 .hover-o100p:hover {
   opacity: 100;
 }
@@ -576,4 +559,29 @@ fieldset {
   display: grid;
   gap: 0.5rem 1.5rem;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+
+@media (min-width: 750px) {
+  .block-sm {
+    display: block;
+  }
+  .flex-sm {
+    display: flex;
+  }
+  .inline-sm {
+    display: inline;
+  }
+  .inline-block-sm {
+    display: inline-block;
+  }
+  .inline-flex-sm {
+    display: inline-flex;
+  }
+  .display-none-sm {
+    display: none;
+  }
+
+  .o0p-sm {
+    opacity: 0;
+  }
 }

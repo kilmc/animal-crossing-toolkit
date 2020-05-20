@@ -49,7 +49,7 @@ const DonatedButton = (props: {
     <button
       onClick={() => handleButtonClick()}
       className={`${
-        isDonated ? "o100p" : "o0p"
+        isDonated ? "o100p" : "o10p o0p-sm"
       } focus-o100p hover-o100p absolute r-1x t-1x `}
     >
       <SvgDonatedOwl className="fill-brown-800" />
