@@ -109,7 +109,7 @@ const timeText = (
       }
     });
     if (isInSeasonInOppositeHemisphere) {
-      formattedTimeOfYear = `Currently active in the ${oppositeHemisphere} hemisphere.`;
+      formattedTimeOfYear = `Currently in season in the ${oppositeHemisphere} hemisphere.`;
     } else {
       formattedTimeOfYear = `Will not be active until ${sortedIntervals[0].start.toFormat(
         "LLLL"
