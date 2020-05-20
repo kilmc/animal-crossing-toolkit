@@ -19,7 +19,7 @@ export const cleanTimeOfYear = (timeOfYear: string | undefined) => {
   return timeOfYear
     .split(", ")
     .map((range) => range.split("-"))
-    .map((ranges) => {
+    .flatMap((ranges) => {
       const [startMonth, endMonth] = ranges.map(monthNameToNumber);
 
       if (ranges.length < 2) {
@@ -29,10 +29,18 @@ export const cleanTimeOfYear = (timeOfYear: string | undefined) => {
           month.endOf("month")
         );
       } else if (endMonth < startMonth) {
-        return Interval.fromDateTimes(
-          now.set({ month: startMonth }).startOf("month"),
-          now.set({ month: endMonth }).plus({ year: 1 }).endOf("month")
+        const startOfYear = now.startOf("year");
+        const endOfYear = now.endOf("year");
+
+        const startInterval = Interval.fromDateTimes(
+          startOfYear,
+          now.set({ month: endMonth }).endOf("month")
         );
+        const endInterval = Interval.fromDateTimes(
+          now.set({ month: startMonth }).startOf("month"),
+          endOfYear
+        );
+        return [startInterval, endInterval];
       } else {
         return Interval.fromDateTimes(
           now.set({ month: startMonth }).startOf("month"),

@@ -10,6 +10,7 @@ export interface CritterProps {
   index: number;
   timeOfDayFound: Interval[];
   timeOfYearFound: Interval[];
+  timeOfYearFoundOpposite: Interval[];
   name: string;
   whereFound: string;
   critterId: string;

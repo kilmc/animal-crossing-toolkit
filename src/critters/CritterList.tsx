@@ -51,6 +51,7 @@ export const CritterList = (props: Props) => {
                 }
                 timeOfDayFound={critter.timeOfDayFound}
                 timeOfYearFound={critter.timeOfYearFound}
+                timeOfYearFoundOpposite={critter.timeOfYearFoundOpposite}
                 name={critter.name}
                 whereFound={critter.whereFound}
                 bells={critter.bells}

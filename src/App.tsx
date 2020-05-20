@@ -15,20 +15,30 @@ interface BugsSheetMapperProps {
 
 const BugsListMapper = (data: BugsSheetMapperProps) => {
   const { hemisphere } = useContext(FilterContext).state;
-  const currentHemisphere =
-    hemisphere === "northern" ? "timeOfYearFoundNorth" : "timeOfYearFoundSouth";
   const critters = data.db.critters;
-  const cleanedAndFilteredBugs = critters.map((critter) => ({
-    ...critter,
-    timeOfYearFound: cleanTimeOfYear(critter[currentHemisphere]),
-    timeOfDayFound: cleanTimeOfDay(critter.timeOfDayFound),
-    bells: parseInt(critter.bells.replace(",", "")),
-    index: parseInt(critter.id),
-    critterType: critter.critterType.toLowerCase() as CritterType,
-    critterId: `${critter.critterType}-${critter.id}`.toLowerCase(),
-  }));
+  const cleanedAndFilteredCritters = critters.map((critter) => {
+    const currentHemisphere =
+      hemisphere === "northern"
+        ? "timeOfYearFoundNorth"
+        : "timeOfYearFoundSouth";
 
-  return <CritterList critters={cleanedAndFilteredBugs} />;
+    const oppositeHemisphere =
+      hemisphere === "southern"
+        ? "timeOfYearFoundNorth"
+        : "timeOfYearFoundSouth";
+    return {
+      ...critter,
+      timeOfYearFound: cleanTimeOfYear(critter[currentHemisphere]),
+      timeOfYearFoundOpposite: cleanTimeOfYear(critter[oppositeHemisphere]),
+      timeOfDayFound: cleanTimeOfDay(critter.timeOfDayFound),
+      bells: parseInt(critter.bells.replace(",", "")),
+      index: parseInt(critter.id),
+      critterType: critter.critterType.toLowerCase() as CritterType,
+      critterId: `${critter.critterType}-${critter.id}`.toLowerCase(),
+    };
+  });
+
+  return <CritterList critters={cleanedAndFilteredCritters} />;
 };
 
 const BugsList = withGoogleSheets("critters")(BugsListMapper);

@@ -3,14 +3,12 @@ import { Interval, DateTime } from "luxon";
 export const timeOfDayDescription = (timeOfDay: Interval[]) => {
   const now = DateTime.local();
 
-  console.log("NOW", now.toFormat("T"));
   if (timeOfDay.length < 2) {
-    console.log("RANGE", timeOfDay[0].toFormat("T"));
     if (timeOfDay[0].contains(now)) {
       const timeLeft = Interval.fromDateTimes(now, timeOfDay[0].end);
       const hoursLeft = timeLeft.toDuration("hours").toFormat("h");
       const minutesLeft = timeLeft.toDuration("minutes").toFormat("mm");
-      console.log("DURATION", timeOfDay[0].toDuration("hours").hours);
+
       if (timeOfDay[0].toDuration("hours").hours > 22) {
         return "Available all day";
       }

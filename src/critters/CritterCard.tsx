@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SvgDonatedOwl } from "../assets/SvgDonatedOwl";
-import { CritterProps } from "../types";
+import { CritterProps, Hemisphere } from "../types";
 import { getCritterImageUrl } from "./utils";
-import { timeOfDayDescription } from "../time/timeOfDayDescription";
-import { Interval } from "luxon";
+import { Interval, DateTime } from "luxon";
+import { FilterContext } from "../App";
 
 type Props = CritterProps & {
   activeNow: boolean;
@@ -57,9 +57,27 @@ const DonatedButton = (props: {
   );
 };
 
-const timeText = (timeOfYear: Interval[], timeOfDay: Interval[]) => {
+const timeText = (
+  timeOfYear: Interval[],
+  timeOfYearOpposite: Interval[],
+  timeOfDay: Interval[],
+  currentHemisphere: Hemisphere
+) => {
+  const now = DateTime.local();
   const isAvailableAllDay = timeOfDay[0].toDuration("hours").hours > 23;
   const isAvailableAllYear = timeOfYear[0].toDuration("months").months > 11;
+  const isOutOfSeasonInCurrentHemisphere = timeOfYear.every((monthRange) => {
+    return !monthRange.contains(DateTime.local());
+  });
+  const isInSeasonInOppositeHemisphere = timeOfYearOpposite.some(
+    (monthRange) => {
+      return monthRange.contains(DateTime.local());
+    }
+  );
+
+  const oppositeHemisphere =
+    currentHemisphere === "northern" ? "Southern" : "Northern";
+
   let formattedTimeOfYear: string;
   let formattedTimeOfDay: string;
 
@@ -80,22 +98,59 @@ const timeText = (timeOfYear: Interval[], timeOfDay: Interval[]) => {
     formattedTimeOfYear = "All year";
   }
 
+  if (isOutOfSeasonInCurrentHemisphere) {
+    const sortedIntervals = timeOfYear.sort((a, b) => {
+      if (now.diff(a.start, "months") < now.diff(b.start, "months")) {
+        return -1;
+      } else if (now.diff(a.start, "months") > now.diff(b.start, "months")) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    if (isInSeasonInOppositeHemisphere) {
+      formattedTimeOfYear = `Currently active in the ${oppositeHemisphere} hemisphere.`;
+    } else {
+      formattedTimeOfYear = `Will not be active until ${sortedIntervals[0].start.toFormat(
+        "LLLL"
+      )}.`;
+    }
+  }
+
   return [formattedTimeOfYear, formattedTimeOfDay];
 };
 
 export const CritterCard = (props: Props) => {
+  const currentHemisphere = useContext(FilterContext).state.hemisphere;
   const [activityText, setActivityText] = useState(
-    timeText(props.timeOfYearFound, props.timeOfDayFound)
+    timeText(
+      props.timeOfYearFound,
+      props.timeOfYearFoundOpposite,
+      props.timeOfDayFound,
+      currentHemisphere
+    )
   );
   const [timeOfYearText, timeOfDayText] = activityText;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActivityText(timeText(props.timeOfYearFound, props.timeOfDayFound));
+      setActivityText(
+        timeText(
+          props.timeOfYearFound,
+          props.timeOfYearFoundOpposite,
+          props.timeOfDayFound,
+          currentHemisphere
+        )
+      );
     }, 60000);
     return () => clearInterval(interval);
-  }, [props.timeOfDayFound, props.timeOfYearFound]);
-  console.log(props.name);
+  }, [
+    currentHemisphere,
+    props.timeOfDayFound,
+    props.timeOfYearFound,
+    props.timeOfYearFoundOpposite,
+  ]);
+
   return (
     <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
       <DonatedButton

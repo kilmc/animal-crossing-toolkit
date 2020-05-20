@@ -2,11 +2,11 @@ import { CritterType, CritterProps } from "../types";
 import { Interval, DateTime } from "luxon";
 
 export const foundThisTimeOfDay = (timeOfDayFound: Interval[]) => {
-  return timeOfDayFound.every((time) => time.contains(DateTime.local()));
+  return timeOfDayFound.some((time) => time.contains(DateTime.local()));
 };
 
 export const foundThisTimeOfYear = (timeOfYearFound: Interval[]) => {
-  return timeOfYearFound.every((time) => time.contains(DateTime.local()));
+  return timeOfYearFound.some((time) => time.contains(DateTime.local()));
 };
 
 export const getCritterImageUrl = (

@@ -9,32 +9,35 @@ const testTimeOfYear = (
 ) =>
   expect(
     cleanTimeOfYear(inputTimeOfYear).map((timeOfYear) =>
-      timeOfYear.toFormat("MMMM y", { separator: " - " })
+      timeOfYear.toFormat("MMMM", { separator: " - " })
     )
   ).toEqual(outputTime);
 
 describe("cleanTimeOfYear", () => {
   it('Handles "Year-round" case', () => {
-    testTimeOfYear("Year-round", ["January 2020 - December 2020"]);
+    testTimeOfYear("Year-round", ["January - December"]);
   });
 
   it("Handles single month case", () => {
-    testTimeOfYear("July", ["July 2020 - July 2020"]);
+    testTimeOfYear("July", ["July - July"]);
   });
 
   it("Handles single range case", () => {
-    testTimeOfYear("April-September", ["April 2020 - September 2020"]);
+    testTimeOfYear("April-September", ["April - September"]);
   });
 
   it("Handles multi range case", () => {
     testTimeOfYear("May-June, September-November", [
-      "May 2020 - June 2020",
-      "September 2020 - November 2020",
+      "May - June",
+      "September - November",
     ]);
   });
 
   it("Handles ranges that cross the year line", () => {
-    testTimeOfYear("November-February", ["November 2020 - February 2021"]);
+    testTimeOfYear("November-February", [
+      "January - February",
+      "November - December",
+    ]);
   });
 });
 
