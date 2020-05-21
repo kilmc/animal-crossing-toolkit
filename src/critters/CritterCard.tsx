@@ -99,15 +99,20 @@ const timeText = (
   }
 
   if (isOutOfSeasonInCurrentHemisphere) {
-    const sortedIntervals = timeOfYear.sort((a, b) => {
-      if (now.diff(a.start, "months") < now.diff(b.start, "months")) {
-        return -1;
-      } else if (now.diff(a.start, "months") > now.diff(b.start, "months")) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+    const sortedIntervals =
+      timeOfYear.length < 1
+        ? timeOfYear.sort((a, b) => {
+            if (now.diff(a.start, "months") < now.diff(b.start, "months")) {
+              return -1;
+            } else if (
+              now.diff(a.start, "months") > now.diff(b.start, "months")
+            ) {
+              return 1;
+            } else {
+              return 0;
+            }
+          })
+        : timeOfYear;
     if (isInSeasonInOppositeHemisphere) {
       formattedTimeOfYear = `Currently in season in the ${oppositeHemisphere} hemisphere.`;
     } else {
