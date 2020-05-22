@@ -50,6 +50,9 @@ fieldset {
   padding: 0;
 }
 
+a {
+}
+
 /* ========== CLASSES ========== */
 
 .block {
@@ -223,6 +226,10 @@ fieldset {
 .px3x {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.p10vh {
+  padding: 10vh;
 }
 
 .ml1x {
@@ -532,14 +539,6 @@ fieldset {
   overflow-y: scroll;
   padding: 1.5rem;
   align-content: start;
-}
-
-.layout-main {
-  height: 100vh;
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
 }
 
 .layout-body {
