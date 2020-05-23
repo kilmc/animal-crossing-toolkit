@@ -1,0 +1,19 @@
+{
+    "name": "Animal Crossing New Horizons Toolkit",
+    "short_name": "Animal Crossing New Horizons Toolkit",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "FFDC81",
+    "background_color": "FFDC81",
+    "display": "standalone"
+}
