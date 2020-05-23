@@ -44,7 +44,7 @@ export const CritterList = (props: Props) => {
           return (
             <li key={`critter-${i}`}>
               <CritterCard
-                key={hemisphere}
+                key={`${i}-${showInactive}-${hemisphere}-${showDonated}-${critterType}`}
                 donations={donations}
                 setDonations={(arr: string[]) =>
                   setState({ ...state, donations: arr })
