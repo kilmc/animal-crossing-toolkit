@@ -7,15 +7,19 @@ import { CritterList } from "./critters/CritterList";
 import { CritterAppSettings } from "./critters/CritterSettings";
 import { useLocalStorageState } from "./utils/useLocalStorageState";
 
+const sheetName =
+  process.env.NODE_ENV === "production" ? "critters" : "critters-staging";
+
 interface BugsSheetMapperProps {
   db: {
     critters: CritterInputProps[];
+    "critters-staging": CritterInputProps[];
   };
 }
 
 const BugsListMapper = (data: BugsSheetMapperProps) => {
   const { hemisphere } = useContext(FilterContext).state;
-  const critters = data.db.critters;
+  const critters = data.db[sheetName];
   const cleanedAndFilteredCritters = critters.map((critter) => {
     const currentHemisphere =
       hemisphere === "northern"
@@ -26,6 +30,9 @@ const BugsListMapper = (data: BugsSheetMapperProps) => {
       hemisphere === "southern"
         ? "timeOfYearFoundNorth"
         : "timeOfYearFoundSouth";
+    const critterType = critter.critterType
+      .toLowerCase()
+      .replace(/\s/, "-") as CritterType;
     return {
       ...critter,
       timeOfYearFound: cleanTimeOfYear(critter[currentHemisphere]),
@@ -33,22 +40,22 @@ const BugsListMapper = (data: BugsSheetMapperProps) => {
       timeOfDayFound: cleanTimeOfDay(critter.timeOfDayFound),
       bells: parseInt(critter.bells.replace(",", "")),
       index: parseInt(critter.id),
-      critterType: critter.critterType.toLowerCase() as CritterType,
-      critterId: `${critter.critterType}-${critter.id}`.toLowerCase(),
+      critterType,
+      critterId: `${critterType}-${critter.id}`.toLowerCase(),
     };
   });
 
   return <CritterList critters={cleanedAndFilteredCritters} />;
 };
 
-const BugsList = withGoogleSheets("critters")(BugsListMapper);
+const BugsList = withGoogleSheets(sheetName)(BugsListMapper);
 
 interface stateProps {
   settingsOpen: boolean;
   showInactive: boolean;
   showDonated: boolean;
   hemisphere: Hemisphere;
-  critterType: CritterType | "both";
+  critterType: CritterType | "all";
   donations: string[];
 }
 const initialState: stateProps = {
@@ -79,7 +86,7 @@ function App() {
     setState({ ...state, showInactive });
   const setHemisphere = (hemisphere: Hemisphere) =>
     setState({ ...state, hemisphere });
-  const setCritter = (critterType: CritterType | "both") =>
+  const setCritter = (critterType: CritterType | "all") =>
     setState({ ...state, critterType });
 
   const donatedBugsCount = state.donations.filter((critter) =>
@@ -90,10 +97,14 @@ function App() {
     critter.match("fish")
   ).length;
 
+  const donatedSeaCreatureCount = state.donations.filter((critter) =>
+    critter.match("sea-creature")
+  ).length;
+
   return (
     <FilterContext.Provider value={{ state, setState }}>
       <GoogleSheetsProvider>
-        <div className="bg-yellow-300">
+        <div className="bg-yellow-300 min-h100vh">
           <header className="layout-header sticky t0 z1">
             <nav className="px3x flex h8x bg-brown-900 text-cream-200 items-center">
               <button className="z2 self-end bg-cream-200 text-brown-800 radius-top1x text-bold p1x fz16px">
@@ -116,6 +127,7 @@ function App() {
               donationsCount={{
                 bugs: donatedBugsCount,
                 fish: donatedFishCount,
+                seaCreatures: donatedSeaCreatureCount,
               }}
             />
           </header>

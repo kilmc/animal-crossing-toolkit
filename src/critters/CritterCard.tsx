@@ -157,7 +157,7 @@ export const CritterCard = (props: Props) => {
   ]);
 
   return (
-    <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb6x">
+    <div className="critter-card bg-cream-200 radius1x shadow1 relative p2x text-brown-800 mb3x mb6x-sm">
       <DonatedButton
         key={props.critterId}
         donatedId={props.critterId}
