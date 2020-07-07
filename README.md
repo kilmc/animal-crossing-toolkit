@@ -8,5 +8,5 @@ You can change the following settings:
 
 - Hemisphere
 - Active/Inactive
-- Critter Type (bugs, fish or both)
+- Critter Type (bugs, fish, sea creatures or all of them)
 - Filter donated
