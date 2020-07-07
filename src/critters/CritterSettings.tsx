@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Hemisphere, CritterType } from "../types";
 import { cxs } from "../utils/className";
+import settingsIcon from "../assets/settings.png";
 import donatedHidden from "../assets/donated-hidden.png";
 import donatedShowing from "../assets/donated-showing.png";
 import inactiveHidden from "../assets/inactive-hidden.png";
@@ -9,7 +10,8 @@ import northernHemisphere from "../assets/northern-hemisphere.png";
 import southernHemisphere from "../assets/southern-hemisphere.png";
 import showingFish from "../assets/showing-fish.png";
 import showingBugs from "../assets/showing-bugs.png";
-import showingBoth from "../assets/showing-both.png";
+import showingSeaCreatures from "../assets/showing-sea-creatures.png";
+import showingAll from "../assets/showing-all.png";
 import { Checkbox, CustomCheckboxProps } from "../components/Checkbox";
 import {
   CustomRadioButtonProps,
@@ -19,7 +21,7 @@ import {
 const CustomRadioButton = (props: CustomRadioButtonProps) => {
   const wrapperClasses = cxs("flex items-center", props.lastItem ? "" : "mr1x");
   const radioClasses = cxs(
-    "w1 h1 radius100p mr1x flex items-center justify-center",
+    "w1 h1 radius100p mr1x flex flex-none items-center justify-center",
     props.isChecked ? "bg-brown-800" : "bg-brown-800_30"
   );
   const radioMarkerClasses = "radius100p bg-cream-200 w40p h40p";
@@ -29,7 +31,9 @@ const CustomRadioButton = (props: CustomRadioButtonProps) => {
       <div className={radioClasses}>
         {props.isChecked && <div className={radioMarkerClasses}></div>}
       </div>
-      <span className={props.isFocused ? "text-bold" : ""}>
+      <span
+        className={cxs("w-max-content", props.isFocused ? "text-bold" : "")}
+      >
         {props.children}
       </span>
     </div>
@@ -83,13 +87,29 @@ const Section = (props: {
   );
 };
 
-const getCritterTypeImageUrl = (critterType: CritterType | "both") => {
+const getCritterTypeInfo = (
+  critterType: CritterType | "all"
+): { imgSrc: string; altText: string } => {
   if (critterType === "fish") {
-    return showingFish;
+    return {
+      imgSrc: showingFish,
+      altText: `Icon of a fish`,
+    };
   } else if (critterType === "bug") {
-    return showingBugs;
+    return {
+      imgSrc: showingBugs,
+      altText: `Icon of a butterfly`,
+    };
+  } else if (critterType === "sea-creature") {
+    return {
+      imgSrc: showingSeaCreatures,
+      altText: `Icon of an octopus`,
+    };
   } else {
-    return showingBoth;
+    return {
+      imgSrc: showingAll,
+      altText: `Icon of a fish, a bug and an octopus`,
+    };
   }
 };
 
@@ -113,27 +133,37 @@ export const CritterAppSettings = (props: {
   setShowInactive: Function;
   hemisphere: Hemisphere;
   setHemisphere: Function;
-  critterType: CritterType | "both";
+  critterType: CritterType | "all";
   setCritter: Function;
-  donationsCount: { bugs: number; fish: number };
+  donationsCount: { bugs: number; fish: number; seaCreatures: number };
 }) => {
   const [settingsOpen, setSettingsOpen] = useState(props.settingsOpen);
-
+  const { altText, imgSrc } = getCritterTypeInfo(props.critterType);
+  const settingsText = settingsOpen ? "Hide settings" : "Show Settings";
   return (
     <div className="bg-cream-200 px3x shadow-1 z1 relative">
       <div className="layout-stats-header block w100p py2x">
         <StatSection stat={`${props.donationsCount.bugs} / 80`} label="bugs" />
         <StatSection stat={`${props.donationsCount.fish} / 80`} label="fish" />
+        <StatSection
+          stat={`${props.donationsCount.seaCreatures} / 40`}
+          label="Sea Creatures"
+        />
 
         <button
-          className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center fz16px"
+          className="jself-end p1x bg-brown-800 text-cream-200 radius1x text-center fz16px flex justify-center items-center"
           onClick={() => {
             const newState = !settingsOpen;
             setSettingsOpen(newState);
             props.setSettingsVisibility(newState);
           }}
         >
-          {settingsOpen ? "Hide settings" : "Show Settings"}
+          <img
+            className="display-none-sm w3x h3x"
+            src={settingsIcon}
+            alt={settingsText}
+          />
+          <span className="display-none inline-sm">{settingsText}</span>
         </button>
       </div>
 
@@ -184,24 +214,19 @@ export const CritterAppSettings = (props: {
               <CustomRadioButton value="southern">South</CustomRadioButton>
             </RadioButtons>
           </Section>
-          <Section
-            imageUrl={getCritterTypeImageUrl(props.critterType)}
-            sectionTitle="Critters"
-            imageAlt={
-              props.critterType === "both"
-                ? `Icon of a bug and a fish`
-                : `Icon of a ${props.critterType}`
-            }
-          >
+          <Section imageUrl={imgSrc} sectionTitle="Critters" imageAlt={altText}>
             <RadioButtons
               radioGroupName="critters"
-              className="flex"
+              className="flex flex-wrap"
               onChange={props.setCritter}
               checkedItem={props.critterType}
             >
               <CustomRadioButton value="bug">Bugs</CustomRadioButton>
               <CustomRadioButton value="fish">Fish</CustomRadioButton>
-              <CustomRadioButton value="both">Both</CustomRadioButton>
+              <CustomRadioButton value="sea-creature">
+                Sea creatures
+              </CustomRadioButton>
+              <CustomRadioButton value="all">All</CustomRadioButton>
             </RadioButtons>
           </Section>
         </form>

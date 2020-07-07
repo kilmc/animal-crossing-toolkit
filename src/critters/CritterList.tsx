@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CritterProps } from "../types";
+import { CritterProps, CritterType } from "../types";
 import { isCritterActive } from "./utils";
 import { CritterCard } from "./CritterCard";
 import { FilterContext } from "../App";
@@ -10,9 +10,9 @@ interface Props {
 
 const filterByCritterType = (
   critter: CritterProps,
-  currentSelection: "bug" | "fish" | "both"
+  currentSelection: CritterType | "all"
 ) => {
-  if (currentSelection === "both") {
+  if (currentSelection === "all") {
     return true;
   }
 

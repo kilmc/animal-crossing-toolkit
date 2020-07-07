@@ -1,6 +1,6 @@
 import { Interval } from "luxon";
 
-export type CritterType = "bug" | "fish";
+export type CritterType = "bug" | "fish" | "sea-creature";
 export type Hemisphere = "northern" | "southern";
 
 export interface CritterProps {
